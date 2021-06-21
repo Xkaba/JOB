@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xd.mapper.AuditMapper">
+    <insert id="addAudit" parameterType="Audit">
+        insert into audit (sid,pid,status) values (#{sid},#{pid},1)
+    </insert>
+
+    <select id="getAuditList" resultType="AuditVi">
+        select p.pid,p.bid,p.positionname,p.salary,p.start_time,p.end_time,a.status,b.bussinessname,b.address,b.phone
+        from position p left join bussiness b on p.bid = b.bid right join audit a on p.pid = a.pid
+    </select>
+
+    <select id="getAuditBySid" resultType="AuditVi">
+        select p.pid,p.bid,p.positionname,p.salary,p.start_time,p.end_time,a.status,b.bussinessname,b.address,b.phone
+        from position p right join bussiness b on p.bid = b.bid right join audit a on p.pid = a.pid where a.sid = #{sid}
+    </select>
+
+    <select id="getAuditByBid" resultType="AuditBu">
+        select p.pid,p.bid,p.positionname,p.salary,p.start_time,p.end_time,a.status,a.sid,b.bussinessname,b.address,b.phone
+        from position p right join bussiness b on p.bid = b.bid right join audit a on p.pid = a.pid where b.bid = #{bid}
+    </select>
+
+    <update id="updateStatusBussiness" parameterType="Audit">
+        update audit
+        <set>
+            <if test="status == 2">status =1</if>
+            <if test="status == 1">status =2</if>
+        </set>
+        where sid=#{sid} and pid =#{pid}
+    </update>
+
+
+
+    <delete id="deleteAudit" parameterType="Audit">
+        delete from audit where sid=#{sid} and pid =#{pid}
+    </delete>
+
+    <select id="getAuditByAid" resultType="Audit">
+        select * from audit where sid=#{sid} and pid =#{pid}
+    </select>
+
+</mapper>

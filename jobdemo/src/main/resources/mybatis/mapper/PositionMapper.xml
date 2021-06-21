@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xd.mapper.PositionMapper">
+
+    <select id="getPositionList" resultType="PositionVi">
+        select p.pid,p.bid,p.positionname,p.salary,p.start_time,p.end_time,b.bussinessname,b.address,b.phone
+        from position p left join bussiness b on p.bid = b.bid
+    </select>
+
+    <select id="getPositionByBid" resultType="PositionVi">
+        select p.pid,p.bid,p.positionname,p.salary,p.start_time,p.end_time,b.bussinessname,b.address,b.phone
+        from position p left join bussiness b on p.bid = b.bid where p.bid=#{bid}
+    </select>
+
+    <select id="getPositionStu" resultType="AuditVi">
+        select p.pid,p.bid,p.positionname,p.salary,p.start_time,p.end_time,b.bussinessname,b.address,b.phone
+        from position p left join bussiness b on p.bid = b.bid
+    </select>
+
+    <select id="getPositionByName" resultType="Position">
+        select * from position where positionname = #{positionname}
+    </select>
+
+    <insert id="addPosition" parameterType="Position">
+        insert into position (pid,bid,positionname,salary,start_time,end_time) values (#{pid},#{bid},#{positionname},#{salary},#{start_time},#{end_time})
+    </insert>
+
+    <update id="updatePosition" parameterType="Position">
+        update position set positionname=#{positionname},salary=#{salary},start_time=#{start_time},end_time=#{end_time} where pid = #{pid}
+    </update>
+
+    <delete id="deletePosition" parameterType="int">
+        delete from position where pid = #{pid}
+    </delete>
+
+</mapper>
+
+
+

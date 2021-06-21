@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xd.mapper.BussinessMapper">
+    <select id="getBussinessList" resultType="Bussiness">
+        select * from bussiness
+    </select>
+
+    <select id="getBussinessById" resultType="Bussiness">
+        select * from bussiness where bid = #{bid}
+    </select>
+
+    <insert id="addBussiness" parameterType="Bussiness">
+        insert into bussiness (bid,bussinessname,password,address,phone) values (#{bid},#{bussinessname},#{password},#{address},#{phone})
+    </insert>
+
+    <update id="updateBussiness" parameterType="Bussiness">
+        update bussiness set bussinessname=#{bussinessname},password=#{password},address=#{address},phone=#{phone} where bid = #{bid}
+    </update>
+
+    <delete id="deleteBussiness" parameterType="int">
+        delete from bussiness where bid = #{bid}
+    </delete>
+</mapper>
